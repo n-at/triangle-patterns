@@ -1,6 +1,15 @@
 {
   "name": "triangle-patters",
-  "version": "1.0.0",
+  "description": "Draw triangle patterns on canvas or export to SVG",
+  "version": "1.0.1",
+  "author": "n-at",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n-at/triangle-patterns.git"
+  },
+  "homepage": "https://github.com/n-at/triangle-patterns",
+  "main": "dist/triangle-patters.js",
   "scripts": {
     "build": "webpack --mode=\"production\"",
     "build-dev": "webpack --mode=\"development\"",
@@ -10,10 +19,7 @@
   "dependencies": {
     "chroma-js": "^2.4.2",
     "core-js": "3.19.1",
-    "d3-random": "^3.0.1",
     "delaunator": "^5.0.0",
-    "install": "^0.13.0",
-    "npm": "^8.10.0",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
