@@ -56,14 +56,14 @@ Export to SVG:
     //default ColorBrewer colors available: https://github.com/gka/chroma.js/blob/main/src/colors/colorbrewer.js
     //use them with TrianglePattern.colors property, for example:
     //colorsX: TrianglePattern.colors.PuBuGn
-    colorsX: chroma.brewer.Oranges,
-    colorsY: chroma.brewer.Purples,
+    colorsX: TrianglePattern.colors.Oranges,
+    colorsY: TrianglePattern.colors.Purples,
 
     //mix ratio between horizontal and vertical scales
     colorMixRatio: 0.5,
 
     //use some color styles from TrianglePattern.styles property
-    colorStyle: ColorStyleDefault,
+    colorStyle: TrianglePattern.styles.default,
     colorStyleJitterIntensity: 0.15,
 
     colorStyleShadowsIntensity: 0.85,
