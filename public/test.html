@@ -21,7 +21,9 @@
     const pattern = TrianglePattern({
         width: 600,
         height: 400,
-        colorStyle: TrianglePattern.styles.default,
+        colorStyle: TrianglePattern.styles.jitter,
+        colorsX: TrianglePattern.colors.PuBuGn,
+        colorsY: TrianglePattern.colors.Viridis,
     });
 
     const canvas = document.getElementById('pattern');
