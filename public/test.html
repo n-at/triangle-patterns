@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Triangle Patterns</title>
+</head>
+<body>
+
+<h1>Triangle Patterns</h1>
+
+<h2>On &lt;canvas&gt;</h2>
+<canvas id="pattern" width="600" height="400"></canvas>
+
+<hr>
+
+<h2>SVG</h2>
+<div id="svg-container"></div>
+
+<script src="../build/triangle-patters.js"></script>
+<script>
+    const pattern = TrianglePattern({
+        width: 600,
+        height: 400,
+        colorStyle: TrianglePattern.styles.default,
+    });
+
+    const canvas = document.getElementById('pattern');
+    const ctx = canvas.getContext('2d');
+    pattern.draw(ctx);
+
+    const svg = document.getElementById('svg-container');
+    svg.innerHTML = pattern.svg();
+</script>
+</body>
+</html>
