@@ -38,6 +38,10 @@ const defaultConfig = {
     //randomize colors on x, y or both palettes
     colorRandomizePalette: RandomizePaletteNone,
 
+    //shift palette colors
+    colorShiftPaletteX: 0,
+    colorShiftPaletteY: 0,
+
     //mix ratio between horizontal and vertical scales
     colorMixRatio: 0.5,
 
@@ -199,12 +203,18 @@ function generateTriangles(points) {
 }
 
 function colorTriangles(config, rng, triangles) {
-    const colorsX = (config.colorRandomizePalette === RandomizePaletteX || config.colorRandomizePalette === RandomizePaletteBoth) ? randomizePalette(config.colorsX, rng) : config.colorsX;
+    let colorsX = shiftPalette(config.colorsX, config.colorShiftPaletteX);
+    if (config.colorRandomizePalette === RandomizePaletteX || config.colorRandomizePalette === RandomizePaletteBoth) {
+        colorsX = randomizePalette(colorsX, rng);
+    }
     const scaleX = chroma.scale(colorsX)
         .mode(config.colorMode)
         .domain([0, config.width]);
 
-    const colorsY = (config.colorRandomizePalette === RandomizePaletteY || config.colorRandomizePalette === RandomizePaletteBoth) ? randomizePalette(config.colorsY, rng) : config.colorsY;
+    let colorsY = shiftPalette(config.colorsY, config.colorShiftPaletteY);
+    if (config.colorRandomizePalette === RandomizePaletteY || config.colorRandomizePalette === RandomizePaletteBoth) {
+        colorsY = randomizePalette(colorsY, rng);
+    }
     const scaleY = chroma.scale(colorsY)
         .mode(config.colorMode)
         .domain([0, config.height]);
@@ -270,6 +280,18 @@ function randomizePalette(colors, rng) {
     }
 
     return randomizedColors;
+}
+
+function shiftPalette(colors, shift) {
+    const shiftedColors = [];
+    for (let color of colors) {
+        shiftedColors.push(color);
+    }
+    for (let i = 0; i < shift; i++) {
+        const color = shiftedColors.shift();
+        shiftedColors.push(color);
+    }
+    return shiftedColors;
 }
 
 function drawTriangleOnCanvas(ctx, triangle) {
