@@ -5,6 +5,8 @@ import chroma from 'chroma-js';
 const ColorStyleDefault = 'default';
 const ColorStyleJitter = 'jitter';
 const ColorStyleShadows = 'shadows';
+const ColorStyleShining = 'shining';
+const ColorStyleSaturate = 'saturate';
 
 const defaultConfig = {
     //size of initial points mesh (horizontal and vertical)
@@ -34,8 +36,10 @@ const defaultConfig = {
     //use some color styles from TrianglePattern.styles property
     colorStyle: ColorStyleDefault,
     colorStyleJitterIntensity: 0.15,
-
     colorStyleShadowsIntensity: 0.85,
+    colorStyleShiningIntensity: 0.85,
+    colorStyleSaturateIntensity: 0.85,
+
     colorMode: 'lrgb',
 };
 
@@ -94,6 +98,8 @@ window.TrianglePattern.styles = {
     default: ColorStyleDefault,
     jitter: ColorStyleJitter,
     shadows: ColorStyleShadows,
+    shining: ColorStyleShining,
+    saturate: ColorStyleSaturate,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -216,6 +222,16 @@ function calculateColor(config, rng, colorScale, value) {
         case ColorStyleShadows: {
             const color = colorScale(value);
             return color.darken(config.colorStyleShadowsIntensity * rng());
+        }
+
+        case ColorStyleShining: {
+            const color = colorScale(value);
+            return color.brighten(config.colorStyleShiningIntensity * rng());
+        }
+
+        case ColorStyleSaturate: {
+            const color = colorScale(value);
+            return color.saturate(config.colorStyleSaturateIntensity * rng());
         }
 
         default:
