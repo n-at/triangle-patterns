@@ -13,6 +13,11 @@ const RandomizePaletteX = 'x';
 const RandomizePaletteY = 'y';
 const RandomizePaletteBoth = 'both';
 
+const FlipPaletteNone = 'none';
+const FlipPaletteX = 'x';
+const FlipPaletteY = 'y';
+const FlipPaletteBoth = 'both';
+
 const defaultConfig = {
     //size of initial points mesh (horizontal and vertical)
     meshStepX: 35,
@@ -37,6 +42,9 @@ const defaultConfig = {
 
     //randomize colors on x, y or both palettes
     colorRandomizePalette: RandomizePaletteNone,
+
+    //flip colors on x, y or both palettes
+    colorFlipPalette: FlipPaletteNone,
 
     //shift palette colors
     colorShiftPaletteX: 0,
@@ -119,6 +127,13 @@ window.TrianglePattern.randomizePalette = {
     x: RandomizePaletteX,
     y: RandomizePaletteY,
     both: RandomizePaletteBoth,
+};
+
+window.TrianglePattern.flipPalette = {
+    none: FlipPaletteNone,
+    x: FlipPaletteX,
+    y: FlipPaletteY,
+    both: FlipPaletteBoth,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -204,6 +219,9 @@ function generateTriangles(points) {
 
 function colorTriangles(config, rng, triangles) {
     let colorsX = shiftPalette(config.colorsX, config.colorShiftPaletteX);
+    if (config.colorFlipPalette === FlipPaletteX || config.colorFlipPalette === FlipPaletteBoth) {
+        colorsX = flipPalette(colorsX);
+    }
     if (config.colorRandomizePalette === RandomizePaletteX || config.colorRandomizePalette === RandomizePaletteBoth) {
         colorsX = randomizePalette(colorsX, rng);
     }
@@ -212,6 +230,9 @@ function colorTriangles(config, rng, triangles) {
         .domain([0, config.width]);
 
     let colorsY = shiftPalette(config.colorsY, config.colorShiftPaletteY);
+    if (config.colorFlipPalette === FlipPaletteY || config.colorFlipPalette === FlipPaletteBoth) {
+        colorsY = flipPalette(colorsY);
+    }
     if (config.colorRandomizePalette === RandomizePaletteY || config.colorRandomizePalette === RandomizePaletteBoth) {
         colorsY = randomizePalette(colorsY, rng);
     }
@@ -292,6 +313,14 @@ function shiftPalette(colors, shift) {
         shiftedColors.push(color);
     }
     return shiftedColors;
+}
+
+function flipPalette(colors) {
+    const flipColors = [];
+    for (let i = colors.length - 1; i >= 0; i--) {
+        flipColors.push(colors[i]);
+    }
+    return flipColors;
 }
 
 function drawTriangleOnCanvas(ctx, triangle) {
