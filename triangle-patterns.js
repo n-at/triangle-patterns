@@ -8,6 +8,11 @@ const ColorStyleShadows = 'shadows';
 const ColorStyleShining = 'shining';
 const ColorStyleSaturate = 'saturate';
 
+const RandomizePaletteNone = 'none';
+const RandomizePaletteX = 'x';
+const RandomizePaletteY = 'y';
+const RandomizePaletteBoth = 'both';
+
 const defaultConfig = {
     //size of initial points mesh (horizontal and vertical)
     meshStepX: 35,
@@ -29,6 +34,9 @@ const defaultConfig = {
     //colorsX: TrianglePattern.colors.PuBuGn
     colorsX: chroma.brewer.Oranges,
     colorsY: chroma.brewer.Purples,
+
+    //randomize colors on x, y or both palettes
+    colorRandomizePalette: RandomizePaletteNone,
 
     //mix ratio between horizontal and vertical scales
     colorMixRatio: 0.5,
@@ -100,6 +108,13 @@ window.TrianglePattern.styles = {
     shadows: ColorStyleShadows,
     shining: ColorStyleShining,
     saturate: ColorStyleSaturate,
+};
+
+window.TrianglePattern.randomizePalette = {
+    none: RandomizePaletteNone,
+    x: RandomizePaletteX,
+    y: RandomizePaletteY,
+    both: RandomizePaletteBoth,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -184,11 +199,13 @@ function generateTriangles(points) {
 }
 
 function colorTriangles(config, rng, triangles) {
-    const scaleX = chroma.scale(config.colorsX)
+    const colorsX = (config.colorRandomizePalette === RandomizePaletteX || config.colorRandomizePalette === RandomizePaletteBoth) ? randomizePalette(config.colorsX, rng) : config.colorsX;
+    const scaleX = chroma.scale(colorsX)
         .mode(config.colorMode)
         .domain([0, config.width]);
 
-    const scaleY = chroma.scale(config.colorsY)
+    const colorsY = (config.colorRandomizePalette === RandomizePaletteY || config.colorRandomizePalette === RandomizePaletteBoth) ? randomizePalette(config.colorsY, rng) : config.colorsY;
+    const scaleY = chroma.scale(colorsY)
         .mode(config.colorMode)
         .domain([0, config.height]);
 
@@ -237,6 +254,22 @@ function calculateColor(config, rng, colorScale, value) {
         default:
             return colorScale(value);
     }
+}
+
+function randomizePalette(colors, rng) {
+    const randomizedColors = [];
+    for (let color of colors) {
+        randomizedColors.push(color);
+    }
+    for (let i = 0; i < colors.length; i++) {
+        const idxA = Math.floor(rng() * colors.length);
+        const idxB = Math.floor(rng() * colors.length);
+        const t = randomizedColors[idxA];
+        randomizedColors[idxA] = randomizedColors[idxB];
+        randomizedColors[idxB] = t;
+    }
+
+    return randomizedColors;
 }
 
 function drawTriangleOnCanvas(ctx, triangle) {
