@@ -83,7 +83,7 @@ window.TrianglePattern = function(patternConfig) {
                 polygons.push(`<polygon points="${points}" fill="${triangle.color}" stroke="${triangle.color}" />`);
             }
 
-            return `<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg">${polygons.join()}</svg>`;
+            return `<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg">${polygons.join('')}</svg>`;
         },
     };
 };

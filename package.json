@@ -1,7 +1,7 @@
 {
   "name": "triangle-patterns",
   "description": "Draw triangle patterns on canvas or export to SVG",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "n-at",
   "license": "BSD-3-Clause",
   "repository": {
