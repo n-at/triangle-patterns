@@ -59,14 +59,26 @@ Export to SVG:
     colorsX: TrianglePattern.colors.Oranges,
     colorsY: TrianglePattern.colors.Purples,
 
+    //randomize colors on x, y or both palettes
+    colorRandomizePalette: TrianglePattern.randomizePalette.none,
+
+    //flip colors on x, y or both palettes
+    colorFlipPalette: TrianglePattern.flipPalette.none,
+
+    //shift palette colors
+    colorShiftPaletteX: 0,
+    colorShiftPaletteY: 0,
+        
     //mix ratio between horizontal and vertical scales
     colorMixRatio: 0.5,
 
     //use some color styles from TrianglePattern.styles property
     colorStyle: TrianglePattern.styles.default,
     colorStyleJitterIntensity: 0.15,
-
     colorStyleShadowsIntensity: 0.85,
+    colorStyleShiningIntensity: 0.85,
+    colorStyleSaturateIntensity: 0.85,
+
     colorMode: 'lrgb',
 }
 ```
